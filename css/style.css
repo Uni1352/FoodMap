@@ -1,0 +1,75 @@
+/***************
+      menu
+ ***************/
+.menu {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  height: 51px;
+}
+
+.menu--row {
+  flex-flow: row wrap;
+}
+
+.menu--col {
+  flex-flow: column wrap;
+}
+
+.menu__item {
+  width: 130px;
+  text-align: center;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+.menu__item a {
+  padding: 15px 30px;
+}
+
+.menu__item .menu {
+  display: none;
+  height: auto;
+  background-color: white;
+}
+
+.menu__item:hover {
+  background-color: #ababf5;
+}
+
+.menu__item:hover .menu {
+  display: block;
+}
+
+.menu__item:hover .menu__item {
+  width: 130px;
+}
+
+.menu__item:hover .menu__item :hover {
+  background-color: #d1d1f8;
+}
+
+/***************
+    container
+ ***************/
+.container {
+  display: flex;
+}
+
+.container--row {
+  flex-flow: row wrap;
+}
+
+.container--col {
+  flex-flow: column wrap;
+}
+
+.banner {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: calc(100vh - 55px);
+}
+
+/*# sourceMappingURL=style.css.map */

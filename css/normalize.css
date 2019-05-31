@@ -1,0 +1,46 @@
+/****************
+    normailize
+ ****************/
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+a {
+  display: block;
+  text-decoration: none;
+  color: black;
+  background-color: transparent;
+}
+
+b,
+strong {
+  font-weight: bold;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-style: none;
+}
+
+form {
+  margin: 5vh 20vw;
+}
+
+input {
+  margin: 10px;
+}
+
+input[type='submit'],
+input[type='text'] {
+  padding: 10px 15px;
+}
+
+/*# sourceMappingURL=normalize.css.map */
