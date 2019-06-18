@@ -39,11 +39,21 @@
   background-color: rgb(206, 206, 255);
 }
 
+.banner {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: calc(100vh - 55px);
+}
+
 /***************
     container
  ***************/
 .container {
   display: flex;
+  height: calc(100vh - 55px);
+  background-color: lavender;
 }
 
 .container--row {
@@ -54,12 +64,36 @@
   flex-flow: column wrap;
 }
 
-.banner {
+/***************
+    form
+ ***************/
+form {
   display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
-  height: calc(100vh - 55px);
+  flex-flow: column wrap;
+  margin: 5vh 20vw;
+  width: 30%;
 }
 
-/*# sourceMappingURL=style.css.map */
+input {
+  margin: 10px;
+}
+
+input[type='submit'],
+input[type='text'],
+input[type='email'],
+input[type='password'] {
+  padding: 10px 15px;
+}
+
+label {
+  margin: 10px;
+  font-size: 1.1em;
+}
+
+form p {
+  margin: 10px;
+}
+
+form a:hover {
+  color: slateblue;
+}

@@ -29,18 +29,3 @@ img {
   height: auto;
   border-style: none;
 }
-
-form {
-  margin: 5vh 20vw;
-}
-
-input {
-  margin: 10px;
-}
-
-input[type='submit'],
-input[type='text'] {
-  padding: 10px 15px;
-}
-
-/*# sourceMappingURL=normalize.css.map */
