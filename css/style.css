@@ -2,51 +2,41 @@
       menu
  ***************/
 .menu {
-  display: flex;
   list-style-type: none;
   padding: 0;
-  height: 51px;
-}
-
-.menu--row {
-  flex-flow: row wrap;
-}
-
-.menu--col {
-  flex-flow: column wrap;
 }
 
 .menu__item {
-  width: 130px;
+  display: inline-block;
   text-align: center;
   font-size: 1em;
   font-weight: normal;
 }
 
 .menu__item a {
+  display: block;
   padding: 15px 30px;
 }
 
-.menu__item .menu {
+.submenu {
   display: none;
-  height: auto;
+  position: absolute;
+  list-style-type: none;
+  padding: 0;
   background-color: white;
+  text-align: left;
 }
 
 .menu__item:hover {
-  background-color: #ababf5;
+  background-color: lavender;
 }
 
-.menu__item:hover .menu {
+.menu__item:hover .submenu {
   display: block;
 }
 
-.menu__item:hover .menu__item {
-  width: 130px;
-}
-
-.menu__item:hover .menu__item :hover {
-  background-color: #d1d1f8;
+.menu__item:hover .submenu li:hover {
+  background-color: rgb(206, 206, 255);
 }
 
 /***************
