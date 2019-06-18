@@ -23,7 +23,7 @@
     <!-- TODO: nav -->
     <nav>
         <ul class="menu">
-            <!-- <li class="menu__item"><a href="#">首頁</a></li> -->
+            <li class="menu__item"><a href="./index.html">首頁</a></li>
             <li class="menu__item"><a href="#">捷運</a>
                 <ul class="submenu">
                     <li><a href="#">文湖線</a></li>
@@ -64,15 +64,17 @@
                     <input type="text" name="search" style="width: 90%;" placeholder="請輸入關鍵字" />
                     <input type="submit" value="送出" />
                 </div>
-                <label for="restaurant">
-                    <input type="radio" name="type" value="restaurant" id="restaurant" checked>餐廳名
-                </label>
-                <label for="MRT">
-                    <input type="radio" name="type" value="MRT" id="MRT">捷運站
-                </label>
-                <label for="district">
-                    <input type="radio" name="type" value="district" id="district">行政區
-                </label>
+                <div style="display: flex;justify-content: flex-start">
+                    <label for="restaurant">
+                        <input type="radio" name="type" value="restaurant" id="restaurant" checked>餐廳名
+                    </label>
+                    <label for="MRT">
+                        <input type="radio" name="type" value="MRT" id="MRT">捷運站
+                    </label>
+                    <label for="district">
+                        <input type="radio" name="type" value="district" id="district">行政區
+                    </label>
+                </div>
             </form>
         </div>
     </header>

@@ -71,7 +71,6 @@ form {
   display: flex;
   flex-flow: column wrap;
   margin: 5vh 20vw;
-  width: 30%;
 }
 
 input {
