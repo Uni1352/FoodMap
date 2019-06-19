@@ -24,7 +24,6 @@
                     <li><a href="#">松山新店線</a></li>
                 </ul>
             </li>
-            <!-- FIXME: submenu 太長 -->
             <li class="menu__item"><a href="#">行政區</a>
                 <ul class="submenu">
                     <li><a href="#">中正區</a></li>
@@ -41,41 +40,35 @@
                     <li><a href="#">文山區</a></li>
                 </ul>
             </li>
-            <li class="menu__item"><a href="./login.html">登入</a></li>
-            <!-- <li class="menu__item"><a href="#">會員</a>
+            <li class="menu__item"><a href="#">會員</a>
                 <ul class="submenu">
                     <li><a href="./member.html">Favorite</a></li>
-                    <li><a href="#">資料修改</a></li>
-                    <li><a href="#">登出</a></li>
+                    <li><a href="./modify.html">資料修改</a></li>
+                    <li><a href="./logout.html">登出</a></li>
                 </ul>
-            </li> -->
+            </li>
         </ul>
     </nav>
-    <header style="background-color: lavender">
-        <div class="banner">
-            <div style="text-align: center">
-                <h1>台北捷運美食地圖</h1>
-                <h3>餓了嗎？來找點東西吃吧~</h3>
-            </div>
-            <form action="./list.html" method="POST">
-                <div style="display: flex;justify-content: space-between;">
-                    <input type="text" name="search" style="width: 90%;" placeholder="請輸入關鍵字" />
-                    <input type="submit" value="送出" />
-                </div>
-                <div style="display: flex;justify-content: flex-start">
-                    <label for="restaurant">
-                        <input type="radio" name="type" value="restaurant" id="restaurant" checked>餐廳名
-                    </label>
-                    <label for="MRT">
-                        <input type="radio" name="type" value="MRT" id="MRT">捷運站
-                    </label>
-                    <label for="district">
-                        <input type="radio" name="type" value="district" id="district">行政區
-                    </label>
-                </div>
-            </form>
+    <div class="container">
+        <div class="sidebar" style="flex-grow: 1;">
+            <ul class="menu" style="flex-flow: column wrap;">
+                <li class="menu__item" style="display: block;text-align: left"><a href="./member.html">Favorite</a></li>
+                <li class="menu__item" style="display: block;text-align: left"><a href="./modify.html">資料修改</a></li>
+                <li class="menu__item" style="display: block;text-align: left"><a href="./logout.html">登出</a></li>
+            </ul>
         </div>
-    </header>
+        <main style="flex-grow: 10">
+            <form action="#" method="POST">
+                <label for="username">名稱</label>
+                <input type="text" name="username" id="username" /><br>
+                <label for="useremail">信箱</label>
+                <input type="email" name="useremail" id="useremail" /><br>
+                <label for="userpassword">密碼</label>
+                <input type="password" name="userpassword" id="userpassword" /><br>
+                <input type="submit" value="修改" id="modify" />
+            </form>
+        </main>
+    </div>
 </body>
 
 </html>

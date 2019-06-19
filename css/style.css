@@ -44,7 +44,7 @@
   flex-direction: column;
   flex-wrap: wrap;
   justify-content: center;
-  height: calc(100vh - 55px);
+  height: calc(100vh - 52px);
 }
 
 /***************
@@ -52,7 +52,7 @@
  ***************/
 .container {
   display: flex;
-  height: calc(100vh - 55px);
+  height: calc(100vh - 52px);
   background-color: lavender;
 }
 
@@ -95,4 +95,40 @@ form p {
 
 form a:hover {
   color: slateblue;
+}
+
+.sidebar {
+  padding-top: 15vh;
+}
+
+.sidebar .menu {
+  margin: 0 auto;
+  width: 150px;
+}
+
+.sidebar .menu__item a:hover {
+  color: slateblue;
+}
+
+main {
+  padding: 15vh 10vw;
+}
+
+main form {
+  display: block;
+  margin: 0;
+}
+
+#logout {
+  margin: 10px 0;
+}
+
+article {
+  display: flex;
+  flex-flow: column wrap;
+  padding: 5px 15px;
+}
+
+article div {
+  margin: 10px;
 }
