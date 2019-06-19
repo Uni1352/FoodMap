@@ -14,7 +14,7 @@
     <!-- TODO: nav -->
     <nav>
         <ul class="menu">
-            <li class="menu__item"><a href="./index.html">首頁</a></li>
+            <li class="menu__item"><a href="./index.php">首頁</a></li>
             <li class="menu__item"><a href="#">捷運</a>
                 <ul class="submenu submenu--block">
                     <li><a href="#">文湖線</a></li>
@@ -49,19 +49,37 @@
                     <li><a href="#">永和區</a></li>
                 </ul>
             </li>
-            <li class="menu__item"><a href="./login.html">登入</a></li>
+            <li class="menu__item"><a href="#">會員</a>
+                <ul class="submenu submenu--block">
+                    <li><a href="./history.php">搜尋紀錄</a></li>
+                    <li><a href="./favorite.php">我的最愛</a></li>
+                    <li><a href="./modify.php">資料修改</a></li>
+                    <li><a href="./logout.php">登出</a></li>
+                </ul>
+            </li>
         </ul>
     </nav>
-    <div class="container container--col" style="justify-content: center;align-items: center">
-        <h2>登入</h2>
-        <form action="#" method="POST" style="width: 30%;">
-            <label for="useremail">信箱</label>
-            <input type="email" name="useremail" id="useremail" /><br>
-            <label for="userpassword">密碼</label>
-            <input type="password" name="userpassword" id="userpassword" /><br>
-            <p>還沒有帳戶嗎？ <a href="./register.html" style="display: inline">註冊</a></p>
-            <input type="submit" id="login" value="登入" />
-        </form>
+    <div class="container">
+        <div class="sidebar" style="flex-grow: 1;">
+            <ul class="menu" style="flex-flow: column wrap;">
+                <li class="menu__item" style="display: block;text-align: left"><a href="./history.php">搜尋紀錄</a></li>
+                <li class="menu__item" style="display: block;text-align: left"><a href="./favorite.php">我的最愛</a></li>
+                <li class="menu__item" style="display: block;text-align: left"><a href="./modify.php">資料修改</a></li>
+                <li class="menu__item" style="display: block;text-align: left"><a href="./logout.php">登出</a></li>
+            </ul>
+        </div>
+        <main style="flex-grow: 10">
+            <h2>資料修改</h2><br>
+            <form action="#" method="POST">
+                <label for="username">名稱</label>
+                <input type="text" name="username" id="username" /><br>
+                <label for="useremail">信箱</label>
+                <input type="email" name="useremail" id="useremail" /><br>
+                <label for="userpassword">密碼</label>
+                <input type="password" name="userpassword" id="userpassword" /><br>
+                <input type="submit" value="修改" id="modify" />
+            </form>
+        </main>
     </div>
 </body>
 
