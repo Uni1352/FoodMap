@@ -31,7 +31,11 @@
   background-color: lavender;
 }
 
-.menu__item:hover .submenu {
+.menu__item:hover .submenu--flex {
+  display: flex;
+}
+
+.menu__item:hover .submenu--block {
   display: block;
 }
 
@@ -52,7 +56,7 @@
  ***************/
 .container {
   display: flex;
-  height: calc(100vh - 52px);
+  min-height: calc(100vh - 52px);
   background-color: lavender;
 }
 
@@ -132,3 +136,7 @@ article {
 article div {
   margin: 10px;
 }
+
+/* article input[type='text'] {
+  padding: 0px;
+} */
