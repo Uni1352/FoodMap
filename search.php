@@ -15,14 +15,16 @@ mysqli_set_charset($conn,'utf8');
 // 尋找店家
 switch($type){
     case 'restaurant':
-      $sql = 'select * from Restaurants where Resname like "%'.$search.'%";';    
+      $sql = 'select * from Restaurants as R, Nearby as N
+              where Resname like "%'.$search.'%" and R.Resname=N.Resname;';    
       break;
     case 'MRT':
       $sql = 'select * from Restaurants as R, Nearby as N
               where MRT like "%'.$search.'%" and R.Resname=N.Resname;';
       break;
     case 'district':
-      $sql = 'select * from Restaurants where ResAddress like "%'.$search.'%";';
+      $sql = 'select * from Restaurants as R, Nearby as N
+              where ResAddress like "%'.$search.'%" and R.Resname=N.Resname;';
       break;
 }
 $result = mysqli_query($conn, $sql);
@@ -108,6 +110,7 @@ $num = mysqli_num_rows($result);
                                       <h3>'.$rows['Resname'].'</h3><br>
                                       <p>電話：'.$rows['Phone'].'</p>
                                       <p>地址：'.$rows['ResAddress'].'</p>
+                                      <p>附近捷運站：'.$rows['MRT'].'</p>
                                   </div>
                               </a><hr>';
                     }
