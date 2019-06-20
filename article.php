@@ -9,6 +9,16 @@ if(!$conn){
 // 更改編碼
 mysqli_set_charset($conn,'utf8');
 
+// 加入搜索紀錄
+if(isset($_SESSION['valid_user'])){
+    $sql = 'insert into Search values
+            ("'.$_SESSION['valid_user'].'","'.$_GET['restaurant'].'","'.date('Y-m-d H:m:s').'");';
+    $result = mysqli_query($conn, $sql);
+    if(!$result){
+        die('Error: '.mysqli_error($conn));
+    }
+}
+
 $sql = 'select * from Restaurants
         where Resname="'.$_GET['restaurant'].'";';
 $result = mysqli_query($conn, $sql);

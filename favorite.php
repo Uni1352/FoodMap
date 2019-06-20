@@ -76,7 +76,7 @@ session_start();
             }
             
             mysqli_close();
-            ?>            
+            ?>
             </article>
         </main>
     </div>

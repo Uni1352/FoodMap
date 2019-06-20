@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,14 +40,45 @@
         <main style="flex-grow: 10">
             <h2>搜索紀錄</h2><br>
             <article>
-                <!-- <a href="./article.php">
-                    <div>
-                        <h3>餐廳名</h3><br>
-                        <p>地址</p>
-                        <p>時間</p>
-                    </div>
-                </a>
-                <hr> -->
+            <?php
+            // 連接資料庫
+            $conn = mysqli_connect('localhost','uni','uni0110','foodmap');
+            if(!$conn){
+                die('Could not connect: '.mysqli_connect_error());
+            }
+            // 更改編碼
+            mysqli_set_charset($conn,'utf8');
+
+            $sql = 'select R.Resname, ResAddress, Phone, Search_time
+                    from Search as S,Restaurants as R 
+                    where Username="'.$_SESSION['valid_user'].'" and R.Resname=S.Resname;';
+            $result = mysqli_query($conn, $sql);
+            if(!$result){
+                die('Error: '.mysqli_error($conn));
+            }
+            // 取得資料筆數
+            $num = mysqli_num_rows($result);
+            
+            // 印出所有資料
+            for($i=0; $i<$num; $i++){
+                $rows = mysqli_fetch_assoc($result);
+                
+                if($rows){                    
+                    echo '<a href="./article.php?restaurant='.$rows['Resname'].'">
+                              <div>
+                                  <div style="display: flex;margin-left: 0">
+                                      <h3 style="font-size: 1.2em">'.$rows['Resname'].'</h3>&nbsp;
+                                      <p style="font-size: 1em">'.$rows['Search_time'].'</p>                               
+                                  </div>
+                                  <p>'.$rows['Phone'].'</p>
+                                  <p>'.$rows['ResAddress'].'</p>
+                              </div>
+                          </a><hr>';
+                }
+            }
+            
+            mysqli_close();
+            ?>
             </article>
         </main>
     </div>
