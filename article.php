@@ -99,7 +99,7 @@ $rows = mysqli_fetch_assoc($result);
             <!-- TODO: 圖片 -->
             <!-- <img src="#" alt="我是圖喔喔喔喔喔喔喔"><br> -->
             <h3 style="margin-bottom: 15px">簡介</h3><br>
-            <p><?php echo $rows['info']; ?></p>
+            <p style="text-indent: 2em;"><?php echo $rows['info']; ?></p>
             <br>
             <!-- TODO: 我的最愛按鈕：點兩下才會轉 -->
             <?php

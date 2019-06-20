@@ -146,6 +146,7 @@ p {
   flex-flow: column wrap;
   width: 30%;
   padding: 20px;
+  margin-bottom: 5vh;
   border: 3px solid purple;
   border-radius: 10px;
 }
