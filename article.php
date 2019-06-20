@@ -12,10 +12,26 @@ mysqli_set_charset($conn,'utf8');
 // 加入搜索紀錄
 if(isset($_SESSION['valid_user']) && isset($_GET['count'])){
     $sql = 'insert into Search values
-            ("'.$_SESSION['valid_user'].'","'.$_GET['restaurant'].'","'.date('Y-m-d H:m:s').'");';
+            ("'.$_SESSION['valid_user'].'","'.$_GET['restaurant'].'","'.date('Y-m-d H:i:s').'");';
     $result = mysqli_query($conn, $sql);
     if(!$result){
         die('Error: '.mysqli_error($conn));
+    }
+
+    // 判斷是否已加入我的最愛
+    $sql = 'select * from Favorite 
+            where Username="'.$_SESSION['valid_user'].'" and Resname="'.$_GET['restaurant'].'";';
+    $result = mysqli_query($conn, $sql);
+    if(!$result){
+        die('Error: '.mysqli_error($conn));
+    }
+
+    $rows = mysqli_fetch_assoc($result);
+    if($rows){
+        $flag="t";
+    }
+    else{
+        $flag="f";
     }
 }
 
@@ -88,58 +104,44 @@ $rows = mysqli_fetch_assoc($result);
             <!-- TODO: 我的最愛按鈕：點兩下才會轉 -->
             <?php
             if(isset($_SESSION['valid_user'])){
-                // 判斷是否已加入我的最愛
-                $sql = 'select * from Favorite 
-                        where Username="'.$_SESSION['valid_user'].'" and Resname="'.$_GET['restaurant'].'";';
-                $result = mysqli_query($conn, $sql);
-                if(!$result){
-                    die('Error: '.mysqli_error($conn));
+                if(isset($_GET['flag'])){
+                    $flag = $_GET['flag'];
+                }
+                
+                // 按鈕顯示
+                if($flag=="t"){
+                    echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'&flag=f" method="POST">
+                              <input type="submit" value="從我的最愛移除" id="deleteFavor" name="deleteFavor" style="margin-left: 0;padding: 5px" />
+                          </form><br>';
+                }
+                if($flag=="f"){
+                    echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'&flag=t" method="POST">
+                              <input type="submit" value="加入我的最愛" id="addFavor" name="addFavor" style="margin-left: 0;padding: 5px" />
+                          </form><br>'; 
                 }
 
-                $rows = mysqli_fetch_assoc($result);
-                if($rows){
-                    $flag=true;
-                    echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'" method="POST">
-                          <input type="submit" value="從我的最愛移除" id="deleteFavor" name="deleteFavor" style="margin-left: 0;padding: 5px" />
-                          </form><br>';
-                    
-                    // 從我的最愛移除
-                    if(isset($_POST['deleteFavor'])){
-                        $sql = 'delete from Favorite 
-                                where Username="'.$_SESSION['valid_user'].'" and Resname="'.$_GET['restaurant'].'";';
-                        $result = mysqli_query($conn, $sql);
-                        if(!$result){
-                            die('Error: '.mysqli_error($conn));
-                        }
-                    } 
-                }
-                else{
-                    $flag=false;
-                    echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'" method="POST">
-                          <input type="submit" value="加入我的最愛" id="addFavor" name="addFavor" style="margin-left: 0;padding: 5px" />
-                          </form><br>';
-                    
-                    // 加入我的最愛
-                    if(isset($_POST['addFavor'])){
-                        $sql = 'insert into Favorite values("'.$_SESSION['valid_user'].'","'.$_GET['restaurant'].'");';
-                        $result = mysqli_query($conn, $sql);
-                        if(!$result){
-                            die('Error: '.mysqli_error($conn));
-                        }
+                // 從我的最愛移除
+                if(isset($_POST['deleteFavor'])){
+                    $sql = 'delete from Favorite 
+                            where Username="'.$_SESSION['valid_user'].'" and Resname="'.$_GET['restaurant'].'";';
+                    $result = mysqli_query($conn, $sql);
+                    if(!$result){
+                        die('Error: '.mysqli_error($conn));
                     }
-                }
 
-                // 顯示按鈕
-                // if($flag==true){
-                //     echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'" method="POST">
-                //           <input type="submit" value="從我的最愛移除" id="deleteFavor" name="deleteFavor" style="margin-left: 0;padding: 5px" />
-                //           </form><br>';
-                // }
-                // else{
-                //     echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'" method="POST">
-                //           <input type="submit" value="加入我的最愛" id="addFavor" name="addFavor" style="margin-left: 0;padding: 5px" />
-                //           </form><br>';
-                // }
+                    $flag="f";
+                }
+                    
+                // 加入我的最愛
+                if(isset($_POST['addFavor'])){
+                    $sql = 'insert into Favorite values("'.$_SESSION['valid_user'].'","'.$_GET['restaurant'].'");';
+                    $result = mysqli_query($conn, $sql);
+                    if(!$result){
+                        die('Error: '.mysqli_error($conn));
+                    }
+
+                    $flag="t";
+                }
             }
             ?>
             <h3 style="margin-bottom: 15px">留言板</h3><br>
