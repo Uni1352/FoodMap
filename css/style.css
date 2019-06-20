@@ -136,3 +136,21 @@ article {
 article div {
   margin: 5vh;
 }
+
+p {
+  margin-bottom: 15px;
+}
+
+.comment {
+  display: flex;
+  flex-flow: column wrap;
+  width: 30%;
+  padding: 20px;
+  border: 3px solid purple;
+  border-radius: 10px;
+}
+
+.comment__content {
+  display: flex;
+  justify-content: space-between;
+}

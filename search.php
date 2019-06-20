@@ -1,5 +1,36 @@
 <?php
 session_start();
+
+$type = $_POST['type'];
+$search = $_POST['search'];
+
+// 連接資料庫
+$conn = mysqli_connect('localhost','uni','uni0110','foodmap');
+if(!$conn){
+    die('Could not connect: '.mysqli_connect_error());
+}
+// 更改編碼
+mysqli_set_charset($conn,'utf8');
+
+// 尋找店家
+switch($type){
+    case 'restaurant':
+      $sql = 'select * from Restaurants where Resname like "%'.$search.'%";';    
+      break;
+    case 'MRT':
+      $sql = 'select * from Restaurants as R, Nearby as N
+              where MRT like "%'.$search.'%" and R.Resname=N.Resname;';
+      break;
+    case 'district':
+      $sql = 'select * from Restaurants where ResAddress like "%'.$search.'%";';
+      break;
+}
+$result = mysqli_query($conn, $sql);
+if(!$result){
+    die('Error: '.mysqli_error($conn));
+}
+// 取得資料筆數
+$num = mysqli_num_rows($result);
 ?>
 
 <!DOCTYPE html>
@@ -59,22 +90,32 @@ session_start();
                     </label>
                 </div>
             </form>
+            <br>
             <article>
-                <a href="./article.php">
-                    <div>
-                        <h3>餐廳名</h3><br>
-                        <p>地址</p>
-                        <p>得分</p>
-                    </div>
-                </a>
-                <hr>
-                <a href="./article.php">
-                    <div>
-                        <h3>餐廳名</h3><br>
-                        <p>地址</p>
-                        <p>得分</p>
-                    </div>
-                </a>
+            <?php
+            // 顯示資料
+            if($num==0){
+                echo '<p>沒有 <b>'.$search.'</b> 的相關結果</p><br>';
+            }
+            else{
+                echo '<p>查詢 <b>'.$search.'</b> 的相關結果：</p><br>';
+                for($i=0; $i<$num; $i++){
+                    $rows = mysqli_fetch_assoc($result);
+
+                    if($rows){                    
+                        echo '<a href="./article.php?restaurant='.$rows['Resname'].'" target="_blank">
+                                  <div>
+                                      <h3>'.$rows['Resname'].'</h3><br>
+                                      <p>電話：'.$rows['Phone'].'</p>
+                                      <p>地址：'.$rows['ResAddress'].'</p>
+                                  </div>
+                              </a><hr>';
+                    }
+                }
+            }
+
+            mysqli_close();
+            ?>
             </article>
         </main>
     </div>

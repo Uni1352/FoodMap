@@ -37,21 +37,14 @@
         <main style="flex-grow: 10">
             <h2>搜索紀錄</h2><br>
             <article>
-                <a href="./article.php">
+                <!-- <a href="./article.php">
                     <div>
                         <h3>餐廳名</h3><br>
                         <p>地址</p>
                         <p>時間</p>
                     </div>
                 </a>
-                <hr>
-                <a href="./article.php">
-                    <div>
-                        <h3>餐廳名</h3><br>
-                        <p>地址</p>
-                        <p>時間</p>
-                    </div>
-                </a>
+                <hr> -->
             </article>
         </main>
     </div>

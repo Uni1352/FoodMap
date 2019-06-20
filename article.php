@@ -1,5 +1,25 @@
 <?php
 session_start();
+
+// 連接資料庫
+$conn = mysqli_connect('localhost','uni','uni0110','foodmap');
+if(!$conn){
+    die('Could not connect: '.mysqli_connect_error());
+}
+// 更改編碼
+mysqli_set_charset($conn,'utf8');
+
+$sql = 'select * from Restaurants
+        where Resname="'.$_GET['restaurant'].'";';
+$result = mysqli_query($conn, $sql);
+if(!$result){
+    die('Error: '.mysqli_error($conn));
+}
+
+// 取得資料筆數
+$num = mysqli_num_rows($result);
+// 取得資料
+$rows = mysqli_fetch_assoc($result);
 ?>
 
 <!DOCTYPE html>
@@ -42,24 +62,115 @@ session_start();
     </nav>
     <div class="container">
         <main style="flex-grow: 1">
-            <h2>餐廳名</h2><br>
-            <h3>基本資料</h3><br>
-            <!-- TODO: 基本資料 -->
+            <h2 style="margin-bottom: 25px"><?php echo $_GET['restaurant']; ?></h2>
+            <h3 style="margin-bottom: 15px">基本資料</h3><br>
+            <p><b>電話：</b><?php echo $rows['Phone']; ?></p>
+            <p><b>地址：</b><?php echo $rows['ResAddress']; ?></p>
+            <p><b>類型：</b><?php echo $rows['ResType']; ?></p>
+            <p><b>營業時間：</b><?php echo $rows['OpenTime']; ?></p>
+            <br>
             <!-- TODO: 圖片 -->
-            <img src="#" alt="我是圖喔喔喔喔喔喔喔"><br>
-            <h3>簡介</h3><br>
-            <!-- TODO: 簡介 -->
-            <h3>留言板</h3><br>
+            <!-- <img src="#" alt="我是圖喔喔喔喔喔喔喔"><br> -->
+            <h3 style="margin-bottom: 15px">簡介</h3><br>
+            <p><?php echo $rows['info']; ?></p>
+            <br>
+            <!-- TODO: 我的最愛按鈕：點兩下才會轉 -->
+            <?php
+            if(isset($_SESSION['valid_user'])){
+                // 判斷是否已加入我的最愛
+                $sql = 'select * from Favorite 
+                        where Username="'.$_SESSION['valid_user'].'" and Resname="'.$_GET['restaurant'].'";';
+                $result = mysqli_query($conn, $sql);
+                if(!$result){
+                    die('Error: '.mysqli_error($conn));
+                }
+
+                $rows = mysqli_fetch_assoc($result);
+                if($rows){
+                    echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'" method="POST">
+                          <input type="submit" value="從我的最愛移除" id="deleteFavor" name="deleteFavor" style="margin-left: 0;padding: 5px" />
+                          </form><br>';
+                    
+                    // 從我的最愛移除
+                    if(isset($_POST['deleteFavor'])){
+                        $sql = 'delete from Favorite 
+                                where Username="'.$_SESSION['valid_user'].'" and Resname="'.$_GET['restaurant'].'";';
+                        $result = mysqli_query($conn, $sql);
+                        if(!$result){
+                            die('Error: '.mysqli_error($conn));
+                        }
+                    } 
+                }
+                else{
+                    echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'" method="POST">
+                          <input type="submit" value="加入我的最愛" id="addFavor" name="addFavor" style="margin-left: 0;padding: 5px" />
+                          </form><br>';
+                    
+                    // 加入我的最愛
+                    if(isset($_POST['addFavor'])){
+                        $sql = 'insert into Favorite values("'.$_SESSION['valid_user'].'","'.$_GET['restaurant'].'");';
+                        $result = mysqli_query($conn, $sql);
+                        if(!$result){
+                            die('Error: '.mysqli_error($conn));
+                        }
+                    }
+                }
+            }
+            ?>
+            <h3 style="margin-bottom: 15px">留言板</h3><br>
             <!-- TODO: 留言板 -->
-            <form action="#" method="POST">
-                <!-- TODO: 登入與非登入 -->
-                <label for="name">名稱</label>
-                <input type="text" id="name" style="padding:5px;margin: 10px 0" /><br>
-                <label for="msg">內容</label>
-                <textarea name="msg" id="msg" cols="30" rows="10"></textarea>
-                <br>
-                <input type="submit" value="送出" id="sendMsg" style="margin-left: 0" />
-            </form>
+            <?php
+            if(isset($_SESSION['valid_user'])){
+                echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'" method="POST">
+                          <p><b>留言人： </b>'.$_SESSION['valid_user'].'</p>
+                          <p><b>留言內容： </b></p>
+                          <textarea name="msg" id="msg" cols="30" rows="10" required></textarea>
+                          <br>
+                          <p><b>星星數： </b></p>
+                          <input type="number" id="star" name="star" min="0" max="5" required /><br>
+                          <input type="submit" value="送出" name="comment" id="comment" style="margin-left: 0" />
+                      </form><br>';
+            }
+            else {
+                echo '<p>登入後才可以留言喔喔喔喔喔喔</p><br>';
+            }
+
+            // 新增留言
+            if(isset($_POST['comment'])){
+                $sql = 'insert into Comments values
+                    ("'.$_SESSION['valid_user'].'","'.$_GET['restaurant'].'","'.date('Y-m-d').'",'.$_POST['star'].',"'.$_POST['msg'].'")';
+                $result = mysqli_query($conn, $sql);
+                if(!$result){
+                    die('Error: '.mysqli_error($conn));
+                }
+            }            
+
+            // 取得留言列表
+            $sql = 'select * from Comments
+                    where Resname="'.$_GET['restaurant'].'";';
+            $result = mysqli_query($conn, $sql);
+            if(!$result){
+                die('Error: '.mysqli_error($conn));
+            }
+            
+            // 取得資料筆數
+            $num = mysqli_num_rows($result);
+            // 取得資料
+            for($i=0; $i<$num; $i++){
+                $rows = mysqli_fetch_assoc($result);
+
+                echo '<div class="comment">
+                          <div class="comment__content">
+                              <h3>'.$rows['Username'].'</h3>
+                              <p>'.$rows['Star'].'</p><br>
+                          </div>
+                          <p>'.$rows['Msg'].'</p>
+                          <p>'.$rows['Comment_date'].'</p><br>
+                      </div>';
+            }
+
+            mysqli_close();
+            ?>           
         </main>
     </div>
 </body>
