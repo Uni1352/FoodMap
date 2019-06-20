@@ -10,7 +10,7 @@ if(!$conn){
 mysqli_set_charset($conn,'utf8');
 
 // 加入搜索紀錄
-if(isset($_SESSION['valid_user'])){
+if(isset($_SESSION['valid_user']) && isset($_GET['count'])){
     $sql = 'insert into Search values
             ("'.$_SESSION['valid_user'].'","'.$_GET['restaurant'].'","'.date('Y-m-d H:m:s').'");';
     $result = mysqli_query($conn, $sql);
@@ -19,6 +19,7 @@ if(isset($_SESSION['valid_user'])){
     }
 }
 
+// 讀取餐廳資料
 $sql = 'select * from Restaurants
         where Resname="'.$_GET['restaurant'].'";';
 $result = mysqli_query($conn, $sql);
@@ -97,6 +98,7 @@ $rows = mysqli_fetch_assoc($result);
 
                 $rows = mysqli_fetch_assoc($result);
                 if($rows){
+                    $flag=true;
                     echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'" method="POST">
                           <input type="submit" value="從我的最愛移除" id="deleteFavor" name="deleteFavor" style="margin-left: 0;padding: 5px" />
                           </form><br>';
@@ -112,6 +114,7 @@ $rows = mysqli_fetch_assoc($result);
                     } 
                 }
                 else{
+                    $flag=false;
                     echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'" method="POST">
                           <input type="submit" value="加入我的最愛" id="addFavor" name="addFavor" style="margin-left: 0;padding: 5px" />
                           </form><br>';
@@ -125,10 +128,21 @@ $rows = mysqli_fetch_assoc($result);
                         }
                     }
                 }
+
+                // 顯示按鈕
+                // if($flag==true){
+                //     echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'" method="POST">
+                //           <input type="submit" value="從我的最愛移除" id="deleteFavor" name="deleteFavor" style="margin-left: 0;padding: 5px" />
+                //           </form><br>';
+                // }
+                // else{
+                //     echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'" method="POST">
+                //           <input type="submit" value="加入我的最愛" id="addFavor" name="addFavor" style="margin-left: 0;padding: 5px" />
+                //           </form><br>';
+                // }
             }
             ?>
             <h3 style="margin-bottom: 15px">留言板</h3><br>
-            <!-- TODO: 留言板 -->
             <?php
             if(isset($_SESSION['valid_user'])){
                 echo '<form action="./article.php?restaurant='.$_GET['restaurant'].'" method="POST">

@@ -51,7 +51,8 @@ session_start();
 
             $sql = 'select R.Resname, ResAddress, Phone, Search_time
                     from Search as S,Restaurants as R 
-                    where Username="'.$_SESSION['valid_user'].'" and R.Resname=S.Resname;';
+                    where Username="'.$_SESSION['valid_user'].'" and R.Resname=S.Resname
+                    order by Search_time desc;';
             $result = mysqli_query($conn, $sql);
             if(!$result){
                 die('Error: '.mysqli_error($conn));
@@ -64,7 +65,7 @@ session_start();
                 $rows = mysqli_fetch_assoc($result);
                 
                 if($rows){                    
-                    echo '<a href="./article.php?restaurant='.$rows['Resname'].'">
+                    echo '<a href="./article.php?restaurant='.$rows['Resname'].'&count=yes">
                               <div>
                                   <div style="display: flex;margin-left: 0">
                                       <h3 style="font-size: 1.2em">'.$rows['Resname'].'</h3>&nbsp;

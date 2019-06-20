@@ -103,7 +103,7 @@ $num = mysqli_num_rows($result);
                     $rows = mysqli_fetch_assoc($result);
 
                     if($rows){                    
-                        echo '<a href="./article.php?restaurant='.$rows['Resname'].'" target="_blank">
+                        echo '<a href="./article.php?restaurant='.$rows['Resname'].'&count=yes" target="_blank">
                                   <div>
                                       <h3>'.$rows['Resname'].'</h3><br>
                                       <p>電話：'.$rows['Phone'].'</p>

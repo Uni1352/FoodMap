@@ -65,7 +65,7 @@ session_start();
                 $rows = mysqli_fetch_assoc($result);
                 
                 if($rows){                    
-                    echo '<a href="./article.php?restaurant='.$rows['Resname'].'">
+                    echo '<a href="./article.php?restaurant='.$rows['Resname'].'&count=yes">
                               <div>
                                   <h3>'.$rows['Resname'].'</h3><br>
                                   <p>'.$rows['Phone'].'</p>

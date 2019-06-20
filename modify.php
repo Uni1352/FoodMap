@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+// 連接資料庫
+$conn = mysqli_connect('localhost','uni','uni0110','foodmap');
+if(!$conn){
+    die('Could not connect: '.mysqli_connect_error());
+}
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -36,14 +48,49 @@
         </div>
         <main style="flex-grow: 10">
             <h2>資料修改</h2><br>
-            <form action="#" method="POST">
+            <form action="./modify.php" method="POST">
                 <label for="username">名稱</label>
-                <input type="text" name="username" id="username" /><br>
+                <input type="text" name="username" id="username" value="<?php echo $_SESSION['valid_user']; ?>" disabled/><br>
                 <label for="useremail">信箱</label>
-                <input type="email" name="useremail" id="useremail" /><br>
-                <label for="userpassword">密碼</label>
-                <input type="password" name="userpassword" id="userpassword" /><br>
-                <input type="submit" value="修改" id="modify" />
+                <input type="email" name="useremail" id="useremail" required /><br>
+                <label for="userOldpsw">舊密碼</label>
+                <input type="password" name="userOldpsw" id="userOldpsw" required /><br>
+                <label for="userNewpsw">新密碼</label>
+                <input type="password" name="userNewpsw" id="userNewpsw" required /><br>
+                <?php
+                // 修改資料
+                if(isset($_POST['modify'])){
+                    if(isset($_POST['useremail']) && isset($_POST['userOldpsw']) && isset($_POST['userNewpsw'])){
+                        $sql = 'select * from Users where Email="'.$_POST['useremail'].'";';
+                        $result = mysqli_query($conn, $sql);
+                        if(!$result){
+                            die('Error: '.mysqli_error($conn));
+                        }
+
+                        $num = mysqli_num_rows($result);
+                        if($num==0){
+                            // 新舊密碼是否相同
+                            if($_POST['userOldpsw']==$_POST['userNewpsw']){
+                                $sql = 'update Users set Email="'.$_POST['useremail'].'",Pwd="'.$_POST['userNewpsw'].'"
+                                        where Username="'.$_SESSION['valid_user'].'";';
+                                $result = mysqli_query($conn, $sql);
+                                if(!$result){
+                                    die('Error: '.mysqli_error($conn));
+                                }
+                                
+                                echo '<p style="color: green">修改成功</p>';
+                            }
+                            else{
+                                echo '<p style="color: red">修改失敗</p>';
+                            }
+                        }
+                        else{
+                            echo '<p style="color: red">修改失敗</p>';
+                        }
+                    }
+                }
+                ?>
+                <input type="submit" value="修改" name="modify" id="modify" />
             </form>
         </main>
     </div>
